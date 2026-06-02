@@ -57,34 +57,33 @@ function Cart(props) {
 
 
     const renderCartItems = () => {
+
+        const plusQty = (id) => {
+            const newCartData = [...cartData];
+            newCartData[id].qty += 1;
+            setCartData(newCartData);
+            localStorage.setItem("Cart", JSON.stringify(cartData.map(item => ({ id: item.id, quantity: item.qty }))));
+        }
+
+        const minusQty = (id) => {
+            const newCartData = [...cartData];
+
+            newCartData[id].qty = newCartData[id].qty - 1 < 1 ? 1 : newCartData[id].qty - 1;
+
+            setCartData(newCartData);
+            localStorage.setItem("Cart", JSON.stringify(cartData.map(item => ({ id: item.id, quantity: item.qty }))));
+        };
+
+        const removeItem = (id) => {
+            const newCartData = cartData.filter(item => item.id !== id);
+            setCartData(newCartData);
+            localStorage.setItem("Cart", JSON.stringify(newCartData.map(item => ({ id: item.id, quantity: item.qty }))));
+        }
+
         return cartData.map((item, index) => {
 
             const images = JSON.parse(item.image);
             const firstImage = images[0];
-
-            const plusQty = () => {
-                const newCartData = [...cartData];
-                newCartData[index].qty += 1;
-                setCartData(newCartData);
-                localStorage.setItem("Cart", JSON.stringify(cartData.map(item => ({ id: item.id, quantity: item.qty }))));
-            }
-
-            const minusQty = () => {
-                const newCartData = [...cartData];
-
-                newCartData[index].qty = newCartData[index].qty - 1 < 1 ? 1 : newCartData[index].qty - 1;
-
-                setCartData(newCartData);
-                localStorage.setItem("Cart", JSON.stringify(cartData.map(item => ({ id: item.id, quantity: item.qty }))));
-            };
-
-            const removeItem = () => {
-                const newCartData = cartData.filter((item, productIndex) => index !== productIndex);
-                // index là vị trí của sản phẩm trong cartData ở hàm map bên trên, productIndex là vị trí của sản phẩm sau khi filter
-                // Nếu index trùng với productIndex thì sản phẩm đó sẽ bị loại bỏ khỏi newCartData
-                setCartData(newCartData);
-                localStorage.setItem("Cart", JSON.stringify(newCartData.map(item => ({ id: item.id, quantity: item.qty }))));
-            }
 
             return (
                 <div className="item-card" key={index}>
@@ -106,11 +105,11 @@ function Cart(props) {
 
                         <div className="item-bottom">
                             <div className="qty-control">
-                                <button className="qty-btn" onClick={minusQty}>
+                                <button className="qty-btn" onClick={() => minusQty(index)}>
                                     −
                                 </button>
                                 <span className="qty-num">{item.qty}</span>
-                                <button className="qty-btn" onClick={plusQty}>
+                                <button className="qty-btn" onClick={() => plusQty(index)}>
                                     +
                                 </button>
                             </div>
@@ -123,7 +122,7 @@ function Cart(props) {
                         </div>
                     </div>
 
-                    <button className="remove-btn" onClick={removeItem}>
+                    <button className="remove-btn" onClick={() => removeItem(index)}>
                         ×
                     </button>
                 </div>
