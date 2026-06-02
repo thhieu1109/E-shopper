@@ -13,6 +13,7 @@ function App(props) {
   const isHomePage = location.pathname === "/"
   const isAccountPage = location.pathname.includes('/member/account')
 
+  
   return (
     <>
       <Header />

@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { CartValueContext } from '../../context/CartContext';
 
 function Header(props) {
 
     let user = JSON.parse(localStorage.getItem('User'));
 
     const navigate = useNavigate();
+
+
 
     const checkLogin = () => {
         if (user) {
@@ -59,8 +62,11 @@ function Header(props) {
         navigate('/');
     }
 
+    const { valueItemInCart } = useContext(CartValueContext);
 
+  
 
+    
 
     return (
         <header id="header">
@@ -217,7 +223,7 @@ function Header(props) {
                                     <li>
                                         <Link to="/product/cart">
                                             <i className="fa fa-shopping-cart"></i>
-                                            Cart
+                                            Cart ({valueItemInCart})
                                         </Link>
                                     </li>
 

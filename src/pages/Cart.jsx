@@ -57,29 +57,6 @@ function Cart(props) {
 
 
     const renderCartItems = () => {
-
-        const plusQty = (id) => {
-            const newCartData = [...cartData];
-            newCartData[id].qty += 1;
-            setCartData(newCartData);
-            localStorage.setItem("Cart", JSON.stringify(cartData.map(item => ({ id: item.id, quantity: item.qty }))));
-        }
-
-        const minusQty = (id) => {
-            const newCartData = [...cartData];
-
-            newCartData[id].qty = newCartData[id].qty - 1 < 1 ? 1 : newCartData[id].qty - 1;
-
-            setCartData(newCartData);
-            localStorage.setItem("Cart", JSON.stringify(cartData.map(item => ({ id: item.id, quantity: item.qty }))));
-        };
-
-        const removeItem = (id) => {
-            const newCartData = cartData.filter(item => item.id !== id);
-            setCartData(newCartData);
-            localStorage.setItem("Cart", JSON.stringify(newCartData.map(item => ({ id: item.id, quantity: item.qty }))));
-        }
-
         return cartData.map((item, index) => {
 
             const images = JSON.parse(item.image);
@@ -122,13 +99,35 @@ function Cart(props) {
                         </div>
                     </div>
 
-                    <button className="remove-btn" onClick={() => removeItem(index)}>
+                    <button className="remove-btn" onClick={() => removeItem(item.id)}>
                         ×
                     </button>
                 </div>
             );
         });
     };
+
+    const plusQty = (id) => {
+        const newCartData = [...cartData];
+        newCartData[id].qty += 1;
+        setCartData(newCartData);
+        localStorage.setItem("Cart", JSON.stringify(cartData.map(item => ({ id: item.id, quantity: item.qty }))));
+    }
+
+    const minusQty = (id) => {
+        const newCartData = [...cartData];
+
+        newCartData[id].qty = newCartData[id].qty - 1 < 1 ? 1 : newCartData[id].qty - 1;
+
+        setCartData(newCartData);
+        localStorage.setItem("Cart", JSON.stringify(cartData.map(item => ({ id: item.id, quantity: item.qty }))));
+    };
+
+    const removeItem = (id) => {
+        const newCartData = cartData.filter(item => item.id !== id);
+        setCartData(newCartData);
+        localStorage.setItem("Cart", JSON.stringify(newCartData.map(item => ({ id: item.id, quantity: item.qty }))));
+    }
 
 
 

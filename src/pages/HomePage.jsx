@@ -26,6 +26,18 @@ function HomePage(props) {
         getDataProducts();
     }, []);
 
+    const addToCart = (productId) => {
+        const cartItems = JSON.parse(localStorage.getItem("Cart")) || [];
+        const existingItem = cartItems.find(item => item.id === productId);
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cartItems.push({ id: productId, quantity: 1 });
+        }
+        alert("Product added to cart!");
+        localStorage.setItem("Cart", JSON.stringify(cartItems)); 
+    }
+
 
 
     const renderProducts = () => {
@@ -48,7 +60,7 @@ function HomePage(props) {
                                 <h2>${product.price}</h2>
                                 <p>{product.name}</p>
 
-                                <a href="#" className="btn btn-default add-to-cart">
+                                <a href="#" className="btn btn-default add-to-cart" onClick={() => addToCart(product.id)}>
                                     <i className="fa fa-shopping-cart"></i>
                                     Add to cart
                                 </a>
@@ -60,7 +72,7 @@ function HomePage(props) {
                                     <h2>${product.price}</h2>
                                     <p>{product.name}</p>
 
-                                    <a href="#" className="btn btn-default add-to-cart">
+                                    <a href="#" className="btn btn-default add-to-cart" onClick={() => addToCart(product.id)}>
                                         <i className="fa fa-shopping-cart"></i>
                                         Add to cart
                                     </a>
@@ -68,6 +80,7 @@ function HomePage(props) {
                                     <Link
                                         to={`/product/detail/${product.id}`}
                                         className="btn btn-default add-to-cart"
+                                        onClick={() => addToCart(product.id)}
                                     >
                                         <i className="fa fa-eye"></i>
                                         More Details

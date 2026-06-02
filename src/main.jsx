@@ -20,30 +20,34 @@ import ProductManageIndex from './components/Products/Manage/ProductManageIndex.
 import ProductList from './components/Products/Manage/ProductList.jsx'
 import ProductDetailPage from './pages/ProductDetailPage.jsx'
 import Cart from './pages/Cart.jsx'
+import CartContext from './context/CartContext.jsx'
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-      <App>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          
-          <Route path="/product/detail/:id" element={<ProductDetailPage />} />
+    <CartContext >
+      <BrowserRouter>
+        <App>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
 
-          <Route path="/blog/list" element={<BlogsPage />} />
-          <Route path="/blog/detail/:id" element={<BlogsDetailPage />} />
-          <Route path='/member/auth' element={<AuthIndex />} />
-          <Route path='/member/account' element={<Account />} />
+            <Route path="/product/detail/:id" element={<ProductDetailPage />} />
+
+            <Route path="/blog/list" element={<BlogsPage />} />
+            <Route path="/blog/detail/:id" element={<BlogsDetailPage />} />
+            <Route path='/member/auth' element={<AuthIndex />} />
+            <Route path='/member/account' element={<Account />} />
 
 
-          <Route path="/member/account/manage-product" element={<ProductManageIndex />} />
-          <Route path="/member/account/list-product" element={<ProductList />} />
+            <Route path="/member/account/manage-product" element={<ProductManageIndex />} />
+            <Route path="/member/account/list-product" element={<ProductList />} />
 
-          <Route path="/product/cart" element={<Cart />} />
-        </Routes>
-      </App>
-    </BrowserRouter>
+            <Route path="/product/cart" element={<Cart />} />
+          </Routes>
+        </App>
+      </BrowserRouter>
+
+    </CartContext>
 
   </StrictMode>,
 )
